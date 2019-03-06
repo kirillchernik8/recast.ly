@@ -1,17 +1,20 @@
 import VideoList from './VideoList.js'
 import VideoPlayer from './VideoPlayer.js'
 import exampleVideoData from "../data/exampleVideoData.js";
+import Search from './Search.js'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
+
     this.state = {
       current: exampleVideoData[0],
       videos: exampleVideoData,
     };
+    this.handleTitleClick = this.handleTitleClick.bind(this)
   }
 
-  handleClick(video){
+  handleTitleClick(video){
     this.setState({
       current: video
     })
@@ -24,7 +27,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div><h5><em>search</em> view goes here</h5></div>
+            <Search />
           </div>
         </nav>
         <div className="row">
@@ -32,7 +35,7 @@ class App extends React.Component {
             <VideoPlayer video={this.state.current} />
           </div>
           <div className="col-md-5">
-            <VideoList videos={this.state.videos} handleClick={this.handleClick.bind(this)} />
+            <VideoList videos={this.state.videos} handleClick={this.handleTitleClick } />
           </div>
         </div>
       </div>
