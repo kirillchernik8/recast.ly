@@ -1,12 +1,12 @@
 import VideoListEntry from "./VideoListEntry.js";
 import exampleVideoData from "../data/exampleVideoData.js";
 
-var VideoList = (videos) => {
+var VideoList = (videos, handleClick) => {
   console.log('VideoList', videos)
   return (
     <div className="video-list">
       {videos.videos.map((video) => {
-       return ( <VideoListEntry video={video} key={video.id.videoId} />)
+       return ( <VideoListEntry video={video} handleClick = {handleClick} key={video.id.videoId} />)
       })}
     </div>
 
