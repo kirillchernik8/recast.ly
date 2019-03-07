@@ -1,17 +1,19 @@
 import VideoList from './VideoList.js'
 import VideoPlayer from './VideoPlayer.js'
-import exampleVideoData from "../data/exampleVideoData.js";
 import Search from './Search.js'
+import searchYouTube from '../lib/searchYouTube.js';
+import YOUTUBE_API_KEY from '../config/youtube.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      current: exampleVideoData[0],
-      videos: exampleVideoData,
+      current: null,
+      videos: [],
     };
     this.handleTitleClick = this.handleTitleClick.bind(this)
+    this.search = this.search.bind(this);
   }
 
   handleTitleClick(video){
@@ -21,13 +23,30 @@ class App extends React.Component {
     
   }
 
+  componentDidMount() {
+    this.search('funny cats');
+    console.log('funny cat');
+  }
+
+  search(query) {
+    console.log('search is running');
+    let options = {};
+    options.key = YOUTUBE_API_KEY;
+    options.query = query;
+    console.log(options);
+    searchYouTube(options, (data) => { 
+      console.log('searchYouTube is running');
+      this.setState({ current: data[0], videos: data })
+    } )
+  }
+
 
   render() {
     return (
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search />
+            <Search search={this.search} />
           </div>
         </nav>
         <div className="row">
